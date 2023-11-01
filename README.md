@@ -1,2 +1,2 @@
 # HyperloopFinder
-An efficient and effective tool for detecting significant multi-way chromatin interactions
+An efficient and effective tool for detecting regulatory multi-way chromatin interactions
