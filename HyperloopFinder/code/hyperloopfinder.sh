@@ -1,13 +1,8 @@
 #!/bin/bash
-#task_suffix=sprite_gm12878_1mb_all_range_background_model_mac_version2_mc50_chr2
-#task_suffix=sprite_gm12878_1mb_all_range_background_model_mac_version3_mc100
-#task_suffix=sprite_gm12878_25kb_mc100_random_shuffled
-#task_suffix=porec_gm12878_25kb_mc100_grch38_high_quality_without_loop_filter_random_shuffled_sup1_maxsize3_chr21
-#task_suffix=porec_gm12878_25kb_mc100_grch38_high_quality_without_loop_filter_sup1_maxsize3_chr21
-task_suffix=time_test
+task_suffix=test
 
-start_step=1
-filter_by_loop=0
+start_step=0
+filter_by_loop=1
 correct_bias=1
 fithic_pass=2
 # 0: detect loop
@@ -27,24 +22,16 @@ num_thread=6
 min_cluster_size=3
 max_cluster_size=100
 resolution=25000
-min_support_count=15
-max_hyperloop_size=3
+min_support_count=5
+max_hyperloop_size=15
 loop_lowerbound=25000
 loop_upperbound=10000000
 loop_fdr_cut=0.05
 
-#cluster_file=../data/GM12878/random_shuffled_sprite_clusters/sprite_random_shuffled_repeat0.clusters
-#cluster_file=../data/GM12878/human.combined.mapq-ge10.clusters
-#cluster_file=../data/GM12878/Pore-C/data/pairs/porec_gm12878_hg19.clusters
 cluster_file=../data/GM12878/random_shuffled_porec_clusters/porec_GM12878_Nlalll_grch38_random_shuffled_repeat0.clusters
-#cluster_file=../data/GM12878/porec_GM12878_Nlalll_grch38.clusters
-#cluster_file=../data/GM12878/Pore-C/data/pairs/porec_gm12878_hg19_splited.clusters
-#cluster_file=../data/GM12878/human.combined.mapq-ge10_splited_up10mb.clusters
 result_dir=../result/GM12878/hyperloops_results_${resolution}_${downweighting}_$task_suffix
 loop_dir=${result_dir}/loops
-#hyperloop_dir=${result_dir}/hyperloops
 hyperloop_dir=${result_dir}/hyperloops
-#chromosome_size_file=../data/chrom_hg19.sizes
 chromosome_size_file=../data/hg38.chrom.sizes.txt
 
 
@@ -69,7 +56,7 @@ time_start1=$SECONDS
 
 if [ $start_step -eq 0 ] && { [ $filter_by_loop -eq 1 ] || [ $correct_bias -eq 1 ] ;} 
 then
-    parallel --ungroup --verbose -I% -j $num_thread ./detect_loops.sh % $loop_dir $resolution $assembly $downweighting $cluster_file $min_cluster_size $max_cluster_size $loop_lowerbound $loop_upperbound $fithic_pass $filter_by_loop $correct_bias ::: ${chroms[*]}
+    parallel --ungroup --verbose -I% -j $num_thread ./detect_loops.sh % $loop_dir $resolution $assembly $downweighting $cluster_file $max_cluster_size $loop_lowerbound $loop_upperbound $fithic_pass $filter_by_loop $correct_bias ::: ${chroms[*]}
 fi
 time_end1=$SECONDS
 time_spend1=$(($time_end1-$time_start1))
