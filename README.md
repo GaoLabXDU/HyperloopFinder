@@ -10,15 +10,25 @@ Therefore, we developed HyperloopFinder, a efficient and effective tool for iden
 
 HyperloopFinder could be installed in a linux-like system. The HyperloopFinder requires the following dependencies. We recommend to use [Anaconda python distribution](https://www.anaconda.com/what-is-anaconda/) for installation of the below python packages.
 
-1. Python (tested on 3.6.13)
-2. numpy (tested on 1.18.1)
-3. pandas (tested on 1.1.5)
-4. matplotlib (tested on 3.1.1)
-5. networkx (tested on 2.4)
-6. scipy (tested on 1.5.2)
-7. fithic (tested on 2.0.7)
+1. Python (tested on 3.9)
+2. numpy (tested on 1.21)
+3. pandas (tested on 1.4)
+4. matplotlib (tested on 3.5)
+5. networkx (tested on 2.7)
+6. scipy (tested on 1.7)
+7. fithic (tested on 2.0)
 
 HyperloopFinder also require fpgrowth, please download it from https://borgelt.net/fpgrowth.html and put it in HyperloopFinder/utils directory.
+HyperloopFinder also require GNU Parallel software for parallel computing (https://www.gnu.org/software/parallel/), Linux users can install it by
+
+Ubuntu / Debian:
+```shell
+sudo apt install parallel
+```
+CentOS / RedHat:
+```shell
+sudo yum install parallel
+```
 
 ## Installation
 
