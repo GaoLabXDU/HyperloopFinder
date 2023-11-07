@@ -196,7 +196,7 @@ def main():
         pool.close()
         pool.join()
 
-    # 将结果合并起来
+    # Joint all results from different chromosomes.
     if start_step <= 5:
         print('Step 5, joint all results from different chromosomes................')
         join_all_result_file(output_path, chroms, filter_by_loop)
@@ -207,9 +207,7 @@ def main():
     print("Thread number = {},Time cost = {}s".format(
         num_thread, time_end-time_start))
 
-# # 将原始的SPRITE数据分箱
-
-
+# # Binning
 def bin_cluster_on_line(line, clique_dict, min_cluster_size, max_cluster_size, resolution):
     items = line.strip().split('\t')
     if not min_cluster_size <= len(items)-1 <= max_cluster_size:
@@ -253,9 +251,7 @@ def bin_clusters(cluster_file, output_path, min_cluster_size, max_cluster_size, 
                 str_out = [str(item) for item in cluster]
                 file_output.write('\t'.join(str_out)+'\n')
 
-# # 挖掘频繁交互模式
-
-
+# # Mining frequent pattern
 def detect_frequent_pattern(min_sup, max_hyper_loop, output_path, chrom, filter_by_loop):
     if filter_by_loop:
         node_file = output_path+'/{}_nodes.txt'.format(chrom)
@@ -265,9 +261,7 @@ def detect_frequent_pattern(min_sup, max_hyper_loop, output_path, chrom, filter_
         os.system('../utils/fpgrowth -ts -m3 -n{} -s-{} -q0 -Z -k " " -v " %a" -P {}/{}_pattern_spectrum.txt {}/{}.clusters {}/{}.fp'.format(
             max_hyper_loop, min_sup, output_path, chrom, output_path, chrom, output_path, chrom))
 
-# # 过滤出显著Loop连通的hyperloop
-
-
+# # Testing conectivity
 def is_connected(bins, loop_set):
     g = nx.Graph()
     g.add_nodes_from(bins)
@@ -344,7 +338,7 @@ def detect_connected_pattern(loop_dir, external_loop_path, chrom, resolution, lo
 
 def quantile_cut(x, q):
     x_np = np.array(x)
-    # 保证每组至少有100个样本
+    # Ensure that there are at least 100 samples in each group.
     q_upper = x_np.shape[0]//100
     if q_upper == 0:
         return np.zeros_like(x_np), np.array([np.min(x_np), np.max(x_np)])
@@ -358,9 +352,7 @@ def quantile_cut(x, q):
     ids = ids-1
     return ids, bins
 
-# # 挖掘显著的多元交互模式
-
-
+# # Testing significance
 def detect_significant_pattern(output_path, chrom, chr_len, loop_dir, external_loop_path, resolution, filter_by_loop, max_hyper_loop, loop_lowerbound, loop_upperbound, correct_bias):
     cluster_file = '{}/{}.clusters'.format(output_path, chrom)
 
@@ -388,7 +380,7 @@ def detect_significant_pattern(output_path, chrom, chr_len, loop_dir, external_l
     cut_value = max(np.mean(bin_count)-2*np.std(bin_count), 0)
     bin_mask = (bin_count > cut_value)
 
-    # 载入bias文件
+    # Load the bias file
     if correct_bias:
         bias_file = loop_dir+'/{}_bias_{}.tsv.gz'.format(chrom, resolution)
         bias_df = pd.read_csv(bias_file, sep='\t', header=None, names=[
@@ -471,7 +463,7 @@ def detect_significant_pattern(output_path, chrom, chr_len, loop_dir, external_l
     for k, df_k in hyperloop_df.groupby('size'):
         hp_dist_group, cuts = quantile_cut(df_k.distance, group_num)
         cuts_bins = (cuts+resolution)//resolution
-        # 对最大值和最小值进行修正
+        # Correct the maximum and minimum values
         cuts_bins[0] = loop_lowerbound//resolution
         cuts_bins[-1] = chr_len_bin
         grouped_test_nums_k_list = []
@@ -503,6 +495,7 @@ def get_pairwise_loop_distribution(chr_len_bin, max_hyper_loop, cluster_file, re
             size = len(bins)
             bin_count[np.array(bins)//resolution] += 1
 
+            # loop version
             # for k in range(3,min(max_hyper_loop,size)+1):
             #     comb_counts[k]+=comb(size,k)
             #     #comb_counts[k]+=enum_kmer(bins,k,min_dist,max_dist)
@@ -521,6 +514,7 @@ def get_pairwise_loop_distribution(chr_len_bin, max_hyper_loop, cluster_file, re
             #     weight_series=pd.Series(data=weight,index=d_genome)
             #     weight_sum_series=weight_series.groupby(level=0).sum()
             #     D3[weight_sum_series.index,k-3]+=weight_sum_series.values
+            
             N_comb = (size-(d_index+1)).reshape((-1, 1))
             k_comb = k_vec-2
             weight = comb(N_comb, k_comb)
@@ -537,13 +531,6 @@ def get_pairwise_loop_distribution(chr_len_bin, max_hyper_loop, cluster_file, re
 def get_expectation(distrib, bins, loc_num, correct_bias, bias_series, resolution, num_trial):
     dist = [(bins[i]-bins[i-1])//resolution for i in range(1, len(bins))]
     probs = [distrib[item] for item in dist]
-    # prob=np.product(probs)/loc_num
-
-    # 实现1
-    # prob=np.product(probs)/(loc_num-range_bin+1)
-    # range_bin=(bins[-1]-bins[0])//resolution
-
-    # 实现2
     prob = np.product(probs)/(loc_num)
 
     # print(num_trial)
@@ -560,7 +547,6 @@ def get_expectation(distrib, bins, loc_num, correct_bias, bias_series, resolutio
 
     prob = prob*total_bias
     expectation = prob*num_trial
-    # p_val=bdtrc(k-1,num_trial,prob)
     return prob, expectation, total_bias, is_valid
 
 
@@ -576,10 +562,8 @@ def get_test_num(bin_count, dist_limit, k_mer, baseline):
 
 
 def get_qvalues(pvalues, num_test):
-    # 假设已经排过序
     pvalues = np.array(pvalues)
     qvalues = pvalues*num_test/np.arange(1, pvalues.shape[0]+1)
-    # 保证单调递增
     qvalues = np.maximum.accumulate(qvalues)
     qvalues[qvalues > 1] = 1
     return qvalues
@@ -588,8 +572,7 @@ def get_qvalues(pvalues, num_test):
 def detect_by_chrom(chrom, chromosome_size, min_sup, output_path, loop_dir, external_loop_path, resolution, max_hyper_loop, loop_lowerbound, loop_upperbound, loop_fdr_cut, start_step, filter_by_loop, correct_bias):
     print('{} start'.format(chrom))
 
-    # # 找到显著loop参与的节点
-    # # 挖掘频繁交互模式
+    # # Mining frequent interaction patterns
     time_start = time.time()
     if start_step <= 2:
         print('Step 2, mine frequent pattern................')
@@ -618,7 +601,7 @@ def detect_by_chrom(chrom, chromosome_size, min_sup, output_path, loop_dir, exte
     with open(output_path+'/times.txt',mode='a') as tf:
         tf.write('\n{}'.format(time_end2-time_start))
 
-    # # 过滤出显著Loop连通的hyperloop
+    # # Testing connectivity
     if start_step <= 3 and filter_by_loop:
         print('Step 3, test connectivity by significant loops................')
         detect_connected_pattern(
@@ -629,7 +612,7 @@ def detect_by_chrom(chrom, chromosome_size, min_sup, output_path, loop_dir, exte
     with open(output_path+'/times.txt',mode='a') as tf:
         tf.write('\n{}'.format(time_end3-time_end2))
 
-    # # 挖掘显著的多元交互模式
+    # # Testing significance
     if start_step <= 4:
         print('Step 4, test the significance of hyperloops................')
         detect_significant_pattern(output_path, chrom, chromosome_size, loop_dir,
