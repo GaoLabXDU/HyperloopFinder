@@ -39,13 +39,13 @@ if [ $filter_by_loop -eq 1 ] || [ $correct_bias -eq 1 ]; then
 fi
 
 if [ $filter_by_loop -eq 1 ]; then
-       python ../utils/fithic/fithic.py -i ${contacts}\
+       fithic -i ${contacts}\
               -f ${fragments}\
               -t ${bias}\
               -o ${loop_dir}/${chrom}_fithic\
               -r ${resolution}\
               -p $fithic_pass\
-              -v\
+              -v \
               -x intraOnly\
               -L $loop_lowerbound\
               -U $loop_upperbound
