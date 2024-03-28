@@ -1,5 +1,5 @@
 # HyperloopFinder
-An efficient and effective Python tool for detecting regulatory multi-way chromatin contacts.
+An efficient and effective Python tool for detecting regulatory multi-way chromatin contacts
 
 ## Overview
 Recent advances in chromatin conformation capture technologies, such as SPRITE and Pore-C, have enabled the detection of simultaneous contacts among multiple chromatin loci. This has made it possible to investigate the cooperative transcriptional regulation involving multiple genes and regulatory elements at the resolution of a single molecule. However, these technologies are unavoidably subject to the random polymer looping effect and technical biases, making it challenging to distinguish genuine regulatory relationships directly from random polymer interactions.
@@ -8,7 +8,7 @@ Therefore, we developed HyperloopFinder, a efficient and effective tool for iden
 
 ## Required Package
 
-HyperloopFinder could be installed in a linux-like system. The HyperloopFinder requires the following dependencies. We recommend using [Anaconda python distribution](https://www.anaconda.com/what-is-anaconda/) to install the below python packages. Generally, the first six dependencies are directly supported in the default Anaconda distribution.
+HyperloopFinder could be installed in a linux-like system. The HyperloopFinder requires the following dependencies. We recommend using [Anaconda python distribution](https://www.anaconda.com/) to install the below python packages. Generally, the first six dependencies are directly supported in the default Anaconda distribution.
 
 1. Python (tested on 3.12.+)
 2. numpy (tested on 1.26.+)
@@ -16,7 +16,7 @@ HyperloopFinder could be installed in a linux-like system. The HyperloopFinder r
 4. matplotlib (tested on 3.8.+)
 5. networkx (tested on 3.2.+)
 6. scipy (tested on 1.12.+)
-7. fithic (tested on 2.0.+) （For detailed installation steps, please refer to: [https://github.com/ay-lab/fithic](https://borgelt.net/fpgrowth.html)）
+7. fithic (tested on 2.0.+) （For detailed installation steps, please refer to: [https://github.com/ay-lab/fithic](https://github.com/ay-lab/fithic)）
 
 ## Installation
 
@@ -27,7 +27,7 @@ git clone https://github.com/gaolabXDU/HyperloopFinder
 ```
 HyperloopFinder also require fpgrowth shell tool, please download it according to your OS from [https://borgelt.net/fpgrowth.html](https://borgelt.net/fpgrowth.html) and put it in `HyperloopFinder/utils` directory. If there is no version supported by your system, you can download the source code from this URL to compile it.
 
-HyperloopFinder also require GNU parallel shell tools ([https://www.gnu.org/software/parallel/](https://borgelt.net/fpgrowth.html)) for executing jobs in parallel using one or more CPUs. you can install it by `yum install parallel` command on CentOS/RHEL operating systems or `sudo apt install parallel` command on Ubuntu / Debian operating systems.
+HyperloopFinder also require GNU parallel shell tools ([https://www.gnu.org/software/parallel/](https://www.gnu.org/software/parallel/)) for executing jobs in parallel using one or more CPUs. you can install it by `yum install parallel` command on CentOS/RHEL operating systems or `sudo apt install parallel` command on Ubuntu / Debian operating systems.
 
 ## Testing installation
 ```
