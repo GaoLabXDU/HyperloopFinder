@@ -1,5 +1,5 @@
 # HyperloopFinder
-An efficient and effective Python tool for detecting regulatory multi-way chromatin contacts
+An efficient and effective Python tool for detecting regulatory multi-way chromatin contacts.
 
 ## Overview
 Recent advances in chromatin conformation capture technologies, such as SPRITE and Pore-C, have enabled the detection of simultaneous contacts among multiple chromatin loci. This has made it possible to investigate the cooperative transcriptional regulation involving multiple genes and regulatory elements at the resolution of a single molecule. However, these technologies are unavoidably subject to the random polymer looping effect and technical biases, making it challenging to distinguish genuine regulatory relationships directly from random polymer interactions.
@@ -8,17 +8,15 @@ Therefore, we developed HyperloopFinder, a efficient and effective tool for iden
 
 ## Required Package
 
-HyperloopFinder could be installed in a linux-like system. The HyperloopFinder requires the following dependencies. We recommend using [Anaconda python distribution](https://www.anaconda.com/what-is-anaconda/) to install the below python packages.
+HyperloopFinder could be installed in a linux-like system. The HyperloopFinder requires the following dependencies. We recommend using [Anaconda python distribution](https://www.anaconda.com/what-is-anaconda/) to install the below python packages. Generally, the first six dependencies are directly supported in the default Anaconda distribution.
 
-1. Python (tested on 3.6.13)
-2. numpy (tested on 1.18.1)
-3. pandas (tested on 1.1.5)
-4. matplotlib (tested on 3.1.1)
-5. networkx (tested on 2.4)
-6. scipy (tested on 1.5.2)
-7. fithic (tested on 2.0.7)
-
-HyperloopFinder also require fpgrowth, please download it from https://borgelt.net/fpgrowth.html and put it in HyperloopFinder/utils directory.
+1. Python (tested on 3.12.+)
+2. numpy (tested on 1.26.+)
+3. pandas (tested on 2.2.+)
+4. matplotlib (tested on 3.8.+)
+5. networkx (tested on 3.2.+)
+6. scipy (tested on 1.12.+)
+7. fithic (tested on 2.0.+) （For detailed installation steps, please refer to: [https://github.com/ay-lab/fithic](https://borgelt.net/fpgrowth.html)）
 
 ## Installation
 
@@ -26,6 +24,15 @@ Download HyperloopFinder by
 
 ```shell
 git clone https://github.com/gaolabXDU/HyperloopFinder
+```
+HyperloopFinder also require fpgrowth shell tool, please download it according to your OS from [https://borgelt.net/fpgrowth.html](https://borgelt.net/fpgrowth.html) and put it in `HyperloopFinder/utils` directory. If there is no version supported by your system, you can download the source code from this URL to compile it.
+
+HyperloopFinder also require GNU parallel shell tools ([https://www.gnu.org/software/parallel/](https://borgelt.net/fpgrowth.html)) for executing jobs in parallel using one or more CPUs. you can install it by `yum install parallel` command on CentOS/RHEL operating systems or `sudo apt install parallel` command on Ubuntu / Debian operating systems.
+
+## Testing installation
+```
+cd ./code
+bash hyperloopfinder_test.sh
 ```
 
 ## Usage
@@ -87,7 +94,7 @@ optional arguments:
                         From which step does the program start?
 
 ```
-To facilitate the use of the software, the user can configure the code/hyperloopfinder.sh script in the code folder with the following example. This bash script implements all processes for detecting hyperloops, mainly including calling Fit-HiC2 to detect pairwise loops and calling hyperloopFinder to detect mult-way chromatin loops. Users can modify these parameters according to their own needs.
+To facilitate the use of the software, the user can configure the `code/hyperloopfinder_test.sh` script in the code folder with the following example. This bash script implements all processes for detecting hyperloops, mainly including calling Fit-HiC2 to detect pairwise loops and calling hyperloopFinder to detect mult-way chromatin loops. Users can modify these parameters according to their own needs.
 
 ```
 task_suffix=time_test
@@ -264,6 +271,7 @@ chr21	48129895
 ### Hyperloop file
 
 An example of hyperloop file as below:
+
 | chrom | hyperloop                                                            | count | size | distance | prob                   | num_trial    | total_bias         | expectation           | fold_enrichment    | p_value                | q_value                |
 |-------|----------------------------------------------------------------------|-------|------|----------|------------------------|--------------|--------------------|-----------------------|--------------------|------------------------|------------------------|
 | chr1  | "[107765000, 107805000, 107825000, 107925000, 107935000, 108135000]" | 3     | 6    | 370000   | 1.229433219060843e-15  | 3980443175.0 | 0.2726566613257882 | 4.893689065929011e-06 | 613034.4530645991  | 1.9532429735507844e-17 | 1.0                    |
