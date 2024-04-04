@@ -1,5 +1,5 @@
 # HyperloopFinder
-An efficient and effective Python tool for detecting regulatory multi-way chromatin contacts
+An efficient and effective Python tool for detecting regulatory multi-way chromatin contacts. Email: <a href="mailto: wbwang.xidian@qq.com">wbwang.xidian@qq.com</a>
 
 ## Overview
 Recent advances in chromatin conformation capture technologies, such as SPRITE and Pore-C, have enabled the detection of simultaneous contacts among multiple chromatin loci. This has made it possible to investigate the cooperative transcriptional regulation involving multiple genes and regulatory elements at the resolution of a single molecule. However, these technologies are unavoidably subject to the random polymer looping effect and technical biases, making it challenging to distinguish genuine regulatory relationships directly from random polymer interactions.
