@@ -25,7 +25,7 @@ Download HyperloopFinder by
 ```shell
 git clone https://github.com/gaolabXDU/HyperloopFinder
 ```
-HyperloopFinder also require fpgrowth shell tool, please download it according to your OS from [https://borgelt.net/fpgrowth.html](https://borgelt.net/fpgrowth.html) and put it in `HyperloopFinder/utils` directory. If there is no version supported by your system, you can download the source code from this URL to compile it.
+HyperloopFinder also require fpgrowth shell tool (tested on version 6.21 (2022.11.22)), please download it according to your OS from [https://borgelt.net/fpgrowth.html](https://borgelt.net/fpgrowth.html) and put it in `HyperloopFinder/utils` directory. If there is no version supported by your system, you can download the source code from this URL to compile it or you can download the source code from `HyperloopFinder/utils/fpgrowth.zip` file and compile it using `make` command at `fpgrowth/fpgrowth/src` directory.
 
 HyperloopFinder also require GNU parallel shell tools ([https://www.gnu.org/software/parallel/](https://www.gnu.org/software/parallel/)) for executing jobs in parallel using one or more CPUs. you can install it by `yum install parallel` command on CentOS/RHEL operating systems or `sudo apt install parallel` command on Ubuntu / Debian operating systems.
 
