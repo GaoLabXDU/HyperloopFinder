@@ -63,7 +63,7 @@ loop_fdr_cut=0.05
 cluster_file=../data/GM12878/porec_GM12878_Nlalll_grch38_chr22.clusters
 # Specify the location of the input file for the multi-way clusters.
 
-chromosome_size_file=../data/hg38.chrom.sizes.txt
+chromosome_size_file=../data/${assembly}.chrom.sizes.txt
 # Specify the size of each chromosome.
 
 ##################################################################################################
