@@ -32,9 +32,6 @@ chroms=('chr22')
 assembly=hg38
 # Specify the reference genome version of cluster data.
 
-downweighting=none
-# Accepts: none only, this parameter is only passed to get_sprite_contacts.py script. Users can not modify it.
-
 num_thread=1
 # Specify the number of threads that used by HyperloopFinder. Using one thread for one chromosome usually increases the speed of the software operation dramatically. But be careful, it may exceed the limit of the user's machine memory.
 # Accepts: integer values greater than or equal to 1.
@@ -54,11 +51,11 @@ min_support_count=5
 max_hyperloop_size=15
 # Specify the maximum number of interaction loci included in the hyperloop. This limits the number of sites contained in the maximum hyperloop and can be set as needed.
 
-loop_lowerbound=50000
-# Integer representing lower bound for the intrachromosomal interactions to be considered in base pairs.
+loop_lowerbound=$((2*$resolution))
+# Integer representing lower bound of distance for the intrachromosomal interactions to be considered in base pairs.
 
 loop_upperbound=2000000
-# Integer representing upper bound for the intrachromosomal interactions to be considered in base pairs.
+# Integer representing upper bound of distance for the intrachromosomal interactions to be considered in base pairs.
 
 loop_fdr_cut=0.05
 # False discovery rate threshold for determining whether a pairwise loop detected by Fit-HiC2 is significant.
@@ -72,6 +69,9 @@ chromosome_size_file=../data/hg38.chrom.sizes.txt
 ##################################################################################################
 # The following variables are automatically generated and generally do not need to be configured.#
 ##################################################################################################
+
+downweighting=none
+# Accepts: none only, this parameter is only passed to get_sprite_contacts.py script. Users can not modify it.
 
 result_dir=../result/hyperloops_results_${resolution}_$task_suffix
 # Specify the location and format of the output folder.
