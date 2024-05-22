@@ -247,14 +247,14 @@ def checkBias(biasvec):
     std = np.std(biasvec)
     mean = np.mean(biasvec)
     median = np.median(biasvec)
-    if (mean < 0.5 or mean > 2): 
+    if (mean < 0.8 or mean > 1.2): 
         print("WARNING... Bias vector has a mean outside of typical range (0.5, 2).")
         print("Consider running with a larger -x option if problems occur")
         print("Mean\t%s" % mean)
         print("Median\t%s" % median)
         print("Std. Dev.\t%s" % std)
         is_valid=False
-    elif (median<0.5 or median > 2):
+    elif (median<0.8 or median > 1.2):
         print("WARNING... Bias vector has a median outside of typical range (0.5, 2).")
         print("Consider running with a larger -x option if problems occur")
         print("Mean\t%s" % mean)
@@ -282,8 +282,10 @@ def outputBias(biasCol, revFrag, outputFilePath):
 def main():
     args = parse_args(sys.argv[3:])
     matrix,revFrag = loadfastfithicInteractions(args.interactions, args.fragments)
+    row_sum=matrix.sum(axis=1)
+    zero_ratio=np.sum(row_sum==0)/row_sum.shape[0]
     
-    for sparseToRemoveT in  np.arange(args.percentOfSparseToRemove,1,0.05):
+    for sparseToRemoveT in np.arange(zero_ratio,1,0.05):
         print('%s of bins are removed')
         bias,is_valid = returnBias(matrix, sparseToRemoveT)
         #checkBias(bias)
