@@ -304,3 +304,19 @@ The file uses the csv (Delimiter-separated values) file format. Each row of the 
 | fold_enrichment |The observed frequency of multi-way chromatin interactions divided by the expected frequency of interactions.|
 | p_value         |P value calculated from the binomial distribution model.|
 | q_value         |The P value is corrected for multiple hypothesis testing to obtain the Q value.|
+
+## References
+
+This project utilizes scripts from the following sources:
+
+- **Script**: [get_sprite_contacts.py](https://github.com/GuttmanLab/sprite-pipeline/blob/master/scripts/python/get_sprite_contacts.py)
+  - **Source**: Guttman Lab
+  - **Modification**: We modified the output format of this script and integrated it into our project. The modified script can be found in the `HyperloopFinder/code` directory.
+
+- **Script**: [HiCKRy.py](https://github.com/ay-lab/fithic/blob/master/fithic/utils/HiCKRy.py)
+  - **Source**: Ay Lab
+  - **Modification**: We adapted this script for normalization of multi-way chromatin contact data and integrated it into our project. The modified script can be found in the `HyperloopFinder/utils` directory.
+
+## Acknowledgements
+
+We would like to thank the Guttman Lab and the Ay Lab for providing the original scripts for extracting SPRITE contacts and normalizing Hi-C data, respectively. Their work has been instrumental in the development of this project.
