@@ -530,20 +530,20 @@ def get_pairwise_loop_distribution(chr_len_bin, max_hyper_loop, cluster_file, re
 def get_expectation(distrib, bins, loc_num, correct_bias, bias_series, resolution, num_trial):
     dist = [(bins[i]-bins[i-1])//resolution for i in range(1, len(bins))]
     probs = [distrib[item] for item in dist]
-    # prob=np.product(probs)/loc_num
+    # prob=np.prod(probs)/loc_num
 
     # 实现1
-    # prob=np.product(probs)/(loc_num-range_bin+1)
+    # prob=np.prod(probs)/(loc_num-range_bin+1)
     # range_bin=(bins[-1]-bins[0])//resolution
 
     # 实现2
-    prob = np.product(probs)/(loc_num)
+    prob = np.prod(probs)/(loc_num)
 
     # print(num_trial)
 
     if correct_bias:
         bias_list = bias_series.loc[bins]
-        total_bias = np.product(bias_list)
+        total_bias = np.prod(bias_list)
     else:
         total_bias = 1
     if total_bias <= 0:
